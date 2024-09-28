@@ -1,0 +1,25 @@
+{
+  "name": "yunzai-fish-speech-plugin",
+  "version": "1.0.0",
+  "description": "yunzai-fish-speech-plugin",
+  "type": "module",
+  "module": "index.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fishaudio/fish-speech.git"
+  },
+  "author": "fishaudio, oldcitynight",
+  "license": "CC-BY-NC-SA-4.0",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
+    "js-yaml": "^4.1.0",
+    "net": "^1.0.2",
+    "node-fetch": "^3.3.2",
+    "os": "^0.1.2"
+  }
+}

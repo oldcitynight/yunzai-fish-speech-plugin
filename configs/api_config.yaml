@@ -1,0 +1,8 @@
+# 是否使用 API 生成模式(详见配置说明)
+enable_api: true
+
+# 设置 API 地址
+api_url: "http://127.0.0.1:8080/"
+
+# 设置是否启用镜像源(适用于大陆地区)
+enable_mirror: false

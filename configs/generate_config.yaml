@@ -1,0 +1,9 @@
+# 是否启用 GPU 加速(需要环境支持，详见配置说明)
+enable_gpu: false
+
+# 默认音色配置
+default_voice_path: "./plugins/yunzai-fish-speech-plugin/datas/defaultVoice/voice.wav"
+default_voice_text: "说起来，深渊教团去奔狼领干嘛？难道又要重演特瓦林事件？啊——重复的灾难就别再来啦。"
+
+# 音色配置集(参照配置说明)
+voice_path: "./plugins/yunzai-fish-speech-plugin/datas/customVoice/"

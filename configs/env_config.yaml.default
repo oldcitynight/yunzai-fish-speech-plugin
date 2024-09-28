@@ -1,0 +1,5 @@
+# 设置 conda 环境名称
+conda_env_name: yunzai-fish-speech
+
+# 设置 conda 可执行文件路径(可选)
+conda_bin_path: 

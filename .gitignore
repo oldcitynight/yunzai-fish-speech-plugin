@@ -1,0 +1,14 @@
+# Ignore all files in the config folder except those with .default suffix
+/config/*
+!/config/*.default
+
+# Ignore Fish-Speech Folder
+/fish-speech
+
+# Ignore common folders and files
+/node_modules
+/dist
+/build
+/tmp
+.DS_Store
+.env
