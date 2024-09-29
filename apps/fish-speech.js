@@ -1,6 +1,6 @@
-// Description: 注册应用
+// Description: 创建应用
 // Autor: oldcitynight
-// Last-change: 2024/9/28 11:13
+// Last-change: 2024/9/29 16:56
 import { loadConfig, dumpConfig } from '../components/dealConfig.js';
 import { Install } from '../components/deployAPI.js';
 import { SimpleAudio, MakeAudio } from '../components/makeAudio.js';
@@ -10,74 +10,64 @@ import { readdir, access } from 'fs/promises';
 export default class FishSpeechPlugin extends plugin {
     constructor(e) {
 
-        const rules = [];
+        const config = loadConfig();
 
         super({
             name: 'FishSpeech',
             dsc: 'FishSpeech',
             event: 'message',
             priority: 100,
-            rule: rules,
+            rule: [
+                {
+                    reg: `^#?${config.common.name}(帮助|help|HELP|指南|bangzhu|说明)$`,
+                    rule: 'help',
+                },
+                {
+                    reg: `^#?${config.common.name}合成(.+)$`,
+                    rule: 'simpleMake',
+                },
+                {
+                    reg: `^#?${config.common.name}(.+)说(.+)$`,
+                    rule: 'MakeVoice',
+                },
+                {
+                    reg: `^#?${config.common.name}音色列表$`,
+                    rule: 'getList',
+                },
+                {
+                    reg: `^#?${config.common.name}自动搭建 API$`,
+                    rule: 'installAPI',
+                    permission: 'master',
+                },
+                {
+                    reg: `^#?${config.common.name}启动本地 API$`,
+                    rule: 'StartAPI',
+                    permission: 'master',
+                },
+                {
+                    reg: `^#?${config.common.name}关闭本地 API$`,
+                    rule: 'ShutdownAPI',
+                    permission: 'master',
+                },
+                {
+                    reg: `^#?${config.common.name}重启本地 API$`,
+                    rule: 'RestartAPI',
+                    permission: 'master',
+                },
+                {
+                    reg: `^#?${config.common.name}测试 API$`,
+                    rule: 'testAPI',
+                    permission: 'master',
+                },
+                {
+                    reg: `^#?${config.common.name}查看配置$`,
+                    rule: 'showConfig',
+                    permission: 'master',
+                },
+            ],
         });
 
-        this.fishConfig = loadConfig();
-
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}(帮助|help|HELP|指南|bangzhu|说明)$`,
-            rule: 'help',
-        });
-        
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}合成(.+)$`,
-            rule: 'simpleMake',
-        });
-
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}合成(.+)$`,
-            rule: 'simpleMake',
-        });
-
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}(.+)说(.+)$`,
-            rule: 'MakeVoice',
-        });
-
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}音色列表$`,
-            rule: 'getList',
-        });
-                      
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}自动搭建 API$`,
-            rule: 'installAPI',
-            permission: 'master',
-        })
-        
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}启动本地 API$`,
-            rule: 'StartAPI',
-            permission: 'master',
-        });
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}关闭本地 API$`,
-            rule: 'ShutdownAPI',
-            permission: 'master',
-        });
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}重启本地 API$`,
-            rule: 'RestartAPI',
-            permission: 'master',
-        });
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}测试 API$`,
-            rule: 'testAPI',
-            permission: 'master',
-        });
-        rules.push({
-            reg: `^#?${this.fishConfig.common.name}查看配置$`,
-            rule: 'showConfig',
-            permission: 'master',
-        });
+        this.fishConfig = config;
     }
 
     async help(e) {
