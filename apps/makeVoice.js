@@ -1,6 +1,6 @@
 // Description: 合成语音
 // Autor: oldcitynight
-// Last-change: 2024/9/29 17:55
+// Last-change: 2024/9/30 21:51
 import { loadCurrentConfig } from "../components/dealConfig.js";
 import { SimpleAudio, MakeAudio } from "../components/makeAudio.js";
 import fs from 'fs/promises';
@@ -22,15 +22,15 @@ export default class MakeVoice extends plugin {
             rule: [
                 {
                     reg: `^#?${config.common.name}合成(.+)$`,
-                    rule: 'simpleMake',
+                    fnc: 'simpleMake',
                 },
                 {
                     reg: `^#?${config.common.name}(.+)说(.+)$`,
-                    rule: 'MakeVoice',
+                    fnc: 'MakeVoice',
                 },
                 {
                     reg: `^#?${config.common.name}音色列表$`,
-                    rule: 'getList',
+                    fnc: 'getList',
                 },
             ],
         });
@@ -45,7 +45,7 @@ export default class MakeVoice extends plugin {
         let audio;
         try {
             audio = await SimpleAudio(text, this.config);
-        } catch (e) {
+        } catch (err) {
             return await e.reply(`合成失败，错误：${e.message}`);
         }
         return await e.reply(segment.record(audio));
@@ -68,7 +68,7 @@ export default class MakeVoice extends plugin {
     }
 
     async getList(e) {
-        const raw_list = await fs.readdir(this.fishConfig.generate.voice_path);
+        const raw_list = await fs.readdir(this.config.generate.voice_path);
         let list = [];
         for (const f of raw_list) {
             if (f.endsWith('.wav') && await fs.access(f.replace('.wav', '.txt'))) {

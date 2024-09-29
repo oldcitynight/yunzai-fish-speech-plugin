@@ -1,6 +1,6 @@
 // Description: 管理配置
 // Autor: oldcitynight
-// Last-change: 2024/9/29 16:56
+// Last-change: 2024/9/30 23:13
 import { loadConfig, dumpConfig } from '../components/dealConfig.js';
 
 export default class ManageConfig extends plugin { 
@@ -15,7 +15,7 @@ export default class ManageConfig extends plugin {
             rule: [
                 {
                     reg: `^#?${config.common.name}查看配置$`,
-                    rule: 'showConfig',
+                    fnc: 'showConfig',
                     permission: 'master',
                 }
             ],

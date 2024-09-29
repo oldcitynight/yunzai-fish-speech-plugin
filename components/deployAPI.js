@@ -78,7 +78,7 @@ const installCondaPkg = async (config) => {
     activate += `activate ${config.env.conda_env_name} \n`;
 
     let cmd = 'pip3 install';
-    cmd += ' -i https://mirrors.aliyun.com/pypi/simple/' ? config.api.use_mirror : '';
+    cmd += config.api.use_mirror ? ' -i https://mirrors.aliyun.com/pypi/simple/' : '';
     cmd += 'torch torchvision torchaudio \n';
 
     const terminal = spawn('sh', [], {
@@ -94,7 +94,7 @@ const installCondaPkg = async (config) => {
     const cd = 'cd ./plugins/yunzai-fish-speech-plugin/fish/speech \n';
     
     let install = 'pip3 install';
-    install += ' -i https://mirrors.aliyun.com/pypi/simple/' ? config.api.use_mirror : '';
+    install += config.api.use_mirror ? ' -i https://mirrors.aliyun.com/pypi/simple/' : '';
     install += ' -e .[stable]'
 
     terminal.stdin.write(cd);
@@ -134,7 +134,7 @@ const pullModel = async (config) => {
     activate += `activate ${config.env.conda_env_name} \n`;
 
     const cd = 'cd ./plugins/yunzai-fish-speech-plugin/fish-speech \n';
-    let pull = 'HF_ENDPOINT=https://hf-mirror.com' ? config.api.use_mirror : '';
+    let pull = config.api.use_mirror ? 'HF_ENDPOINT=https://hf-mirror.com' : '';
     pull += 'huggingface-cli download fishaudio/fish-speech-1.4 --local-dir checkpoints/fish-speech-1.4 \n';
 
     const terminal = spawn('sh', [], {

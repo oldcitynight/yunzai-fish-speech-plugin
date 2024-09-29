@@ -1,6 +1,6 @@
 // Description: 注册应用
 // Autor: oldcitynight
-// Last-change: 2024/9/29 19:38
+// Last-change: 2024/9/30 23:59
 import fs from 'fs/promises';
 
 fs.readFile('./plugins/yunzai-fish-speech-plugin/package.json', 'utf-8')

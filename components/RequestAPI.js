@@ -1,7 +1,8 @@
 // Description: 请求 API 返回音频
 // Autor: oldcitynight
-// Last-change: 2024/9/28 3:27
+// Last-change: 2024/9/30 23:42
 import fetch from 'node-fetch';
+import msgpack from 'msgpack';
 
 // 参考音频格式
 export class Reference {
@@ -36,18 +37,24 @@ export class Params {
 }
 
 export const RequestForAudio = async (params, config) => {
-    const url = `${config.api.api_url}/v1/tts`;
+    let url = config.api.api_url;
+
+    url += url.endsWith('/') ? 'v1/tts' : '/v1/tts';
 
     let options = {
         method: 'POST',
         headers: {
             "authorization": "Bearer YOUR_API_KEY",
-            'Content-Type': 'application',
+            'Content-Type': 'application/msgpack',
         },
-        body: JSON.stringify(params),
+        body: msgpack.pack(params),
     }
 
     const res = await fetch(url, options);
+
+    if (res.status !== 200) {
+        throw new Error(`请求失败，错误信息：${res.statusText}`);
+    }
 
     const arrayBuffer = await res.arrayBuffer();
     return Buffer.from(arrayBuffer);

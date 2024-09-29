@@ -1,13 +1,16 @@
 // Description: 管理 API
 // Autor: oldcitynight
-// Last-change: 2024/9/28 2:43
+// Last-change: 2024/9/30 21:11
 import { spawn } from 'child_process';
 import { Socket } from 'net';
 
 export const startAPI = async (config) => {
     
+    // 修正 Windows 下 sh 不存在的问题
+    const shell = process.platform === 'win32' ? 'powershell.exe' : 'sh';
+
     // 创建终端实例
-    const terminal = spawn('sh', [], {
+    const terminal = spawn(shell, [], {
         stdio: ['pipe', 'inherit', 'inherit']
     });
 
@@ -28,24 +31,29 @@ export const startAPI = async (config) => {
     cmd += ' --listen 127.0.0.1:8080 --decoder-config-name firefly_gan_vq';
     cmd += ' --llama-checkpoint-path "checkpoints/fish-speech-1.4"';
     cmd += ' --decoder-checkpoint-path "checkpoints/fish-speech-1.4/firefly-gan-vq-fsq-8x1024-21hz-generator.pth"';
-    if (config.generate.enable_gpu) {
-        cmd += '--compile';
+    if (!config.generate.enable_gpu) {
+        cmd += ' --device "cpu"';
     }
     if (config.api.enable_mirror) {
-        cmd = 'HF_ENDPOINT=https://hf-mirror.com' + cmd;
+        cmd = 'HF_ENDPOINT=https://hf-mirror.com ' + cmd;
     }
 
     terminal.stdin.write(`${cmd}\n`);
 
     // 异步等待端口被占用
     await new Promise((resolve) => {
+        let time = 0;
         const checkPort = () => {
+
+            if (time > 360) { throw new Error('API 启动超时') }
+
             const client = new Socket();
             client.once('connect', () => {
                 client.end();
                 resolve();
             });
             client.once('error', () => {
+                time += 0.5;
                 setTimeout(checkPort, 500);
             });
             client.connect(8080, '127.0.0.1');

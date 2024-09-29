@@ -1,6 +1,6 @@
 // Description: 读取和写入配置文件
 // Autor: oldcitynight
-// Last-change: 2024/9/29 16:23
+// Last-change: 2024/9/30 21:23
 import { readFileSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml';
 
