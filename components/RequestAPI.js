@@ -49,5 +49,6 @@ export const RequestForAudio = async (params, config) => {
 
     const res = await fetch(url, options);
 
-    return await res.buffer();
+    const arrayBuffer = await res.arrayBuffer();
+    return Buffer.from(arrayBuffer);
 }

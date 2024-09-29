@@ -1,6 +1,6 @@
 // Description: 读取和写入配置文件
 // Autor: oldcitynight
-// Last-change: 2024/9/28 2:28
+// Last-change: 2024/9/29 16:23
 import { readFileSync, writeFileSync } from 'fs';
 import yaml from 'js-yaml';
 
@@ -47,6 +47,19 @@ export const loadConfig = () => {
     readCfg('generate', config);
     readCfg('common', config);
     return config;
+}
+
+export const loadCurrentConfig = (point) => {
+    let file;
+    let cfg;
+    try {
+        file = readFileSync(`./plugins/yunzai-fish-speech-plugin/configs/${point}_config.yaml`, 'utf8');
+        cfg = yaml.load(file);
+    } catch (e) {
+        console.log(`配置文件 ${point}_config.yaml 未找到或读取失败, 将使用默认配置`);
+        return;
+    }
+    return cfg;
 }
 
 export const dumpConfig = (config) => {
