@@ -1,8 +1,8 @@
 // Description: 请求 API 返回音频
 // Autor: oldcitynight
-// Last-change: 2024/9/30 23:42
+// Last-change: 2024/9/30 18:21
 import fetch from 'node-fetch';
-import msgpack from 'msgpack';
+import msgpack from '@msgpack/msgpack';
 
 // 参考音频格式
 export class Reference {
@@ -47,7 +47,7 @@ export const RequestForAudio = async (params, config) => {
             "authorization": "Bearer YOUR_API_KEY",
             'Content-Type': 'application/msgpack',
         },
-        body: msgpack.pack(params),
+        body: msgpack.encode(params),
     }
 
     const res = await fetch(url, options);

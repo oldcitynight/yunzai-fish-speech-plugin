@@ -1,12 +1,13 @@
 // Description: 管理配置
 // Autor: oldcitynight
-// Last-change: 2024/9/30 23:13
-import { loadConfig, dumpConfig } from '../components/dealConfig.js';
+// Last-change: 2024/9/30 19:10
+import { dumpConfig } from "../components/dealConfig";
 
 export default class ManageConfig extends plugin { 
-    constructor(e) {
-        const config = loadConfig();
 
+    static config;
+
+    constructor(e) {
         super({
             name: 'ManageConfig',
             dsc: 'ManageConfig',
@@ -14,14 +15,15 @@ export default class ManageConfig extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: `^#?${config.common.name}查看配置$`,
+                    reg: `^#?${ManageConfig.config.common.name}查看配置$`,
                     fnc: 'showConfig',
                     permission: 'master',
                 }
             ],
         });
 
-        this.config = config;
+        this.config = ManageConfig.config;
+        
     }
 
     async showConfig(e) {

@@ -1,19 +1,14 @@
 // Description: 合成语音
 // Autor: oldcitynight
-// Last-change: 2024/9/30 21:51
-import { loadCurrentConfig } from "../components/dealConfig.js";
+// Last-change: 2024/9/30 19:09
 import { SimpleAudio, MakeAudio } from "../components/makeAudio.js";
 import fs from 'fs/promises';
 
-export default class MakeVoice extends plugin { 
+export default class MakeVoice extends plugin {
+
+    static config;
+
     constructor(e) {
-
-        const config = {
-            'api': loadCurrentConfig('api'),
-            'generate': loadCurrentConfig('generate'),
-            'common': loadCurrentConfig('common'),
-        };
-
         super({
             name: 'MakeVoice',
             dsc: 'MakeVoice',
@@ -21,21 +16,22 @@ export default class MakeVoice extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: `^#?${config.common.name}合成(.+)$`,
+                    reg: `^#?${MakeVoice.config.common.name}合成(.+)$`,
                     fnc: 'simpleMake',
                 },
                 {
-                    reg: `^#?${config.common.name}(.+)说(.+)$`,
+                    reg: `^#?${MakeVoice.config.common.name}(.+)说(.+)$`,
                     fnc: 'MakeVoice',
                 },
                 {
-                    reg: `^#?${config.common.name}音色列表$`,
+                    reg: `^#?${MakeVoice.config.common.name}音色列表$`,
                     fnc: 'getList',
                 },
             ],
         });
-        
-        this.config = config;
+
+        this.config = MakeVoice.config;
+
     }
 
     async simpleMake(e) {
@@ -43,11 +39,19 @@ export default class MakeVoice extends plugin {
         let text = msg.match(/合成(.+)/)[1].trim();
         
         let audio;
+
+        logger.debug('收到语音合成命令，准备发送请求到后端')
+        const start = new Date().getTime();
+
         try {
             audio = await SimpleAudio(text, this.config);
         } catch (err) {
             return await e.reply(`合成失败，错误：${e.message}`);
         }
+
+        const end = new Date().getTime();
+        logger.debug(`语音合成成功，用时 ${(end - start)/1000}s`)
+
         return await e.reply(segment.record(audio));
     }
 

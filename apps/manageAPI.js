@@ -1,16 +1,15 @@
 // Description: 管理 API
 // Autor: oldcitynight
-// Last-change: 2024/9/30 22:05
-import { loadConfig } from '../components/dealConfig.js';
+// Last-change: 2024/9/30 19:08
 import { startAPI, shutdownAPI, restartAPI } from '../components/manageAPI.js';
 import { SimpleAudio } from '../components/makeAudio.js';
 import { Install } from '../components/deployAPI.js';
 
 export default class ManageAPI extends plugin {
+
+    static config;
+
     constructor(e) {
-
-        const config = loadConfig();
-
         super({
             name: 'manageAPI',
             dsc: 'manageAPI',
@@ -18,34 +17,35 @@ export default class ManageAPI extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: `^#?${config.common.name}自动搭建 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}自动搭建 API$`,
                     fnc: 'installAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${config.common.name}启动本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}启动本地 API$`,
                     fnc: 'StartAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${config.common.name}关闭本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}关闭本地 API$`,
                     fnc: 'ShutdownAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${config.common.name}重启本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}重启本地 API$`,
                     fnc: 'RestartAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${config.common.name}测试 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}测试 API$`,
                     fnc: 'testAPI',
                     permission: 'master'
                 },
             ],
         });
 
-        this.config = config;
+        this.config = ManageAPI.config;
+
     }
 
     async installAPI(e) {
