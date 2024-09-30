@@ -6,7 +6,7 @@ git clone --depth=1 https://github.com/oldcitynight/yunzai-fish-speech-plugin ./
 ```
   2. 克隆 fish-speech 项目
 ```
-git clone --depth=1 https://github.com/fishaudio/fish-speech ./plugins/yunzai-fish-speech/fish-speech/
+git clone --depth=1 https://github.com/fishaudio/fish-speech ./plugins/yunzai-fish-speech-plugin/fish-speech/
 ```
  3. 按照下面网站中的指南完成 fish-speech 所需环境的配置
 
