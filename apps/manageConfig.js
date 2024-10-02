@@ -1,7 +1,7 @@
 // Description: 管理配置
 // Autor: oldcitynight
-// Last-change: 2024/9/30 19:10
-import { dumpConfig } from "../components/dealConfig";
+// Last-change: 2024/9/30 19:46
+import { dumpConfig } from "../components/dealConfig.js";
 
 export default class ManageConfig extends plugin { 
 
