@@ -1,6 +1,5 @@
-# Ignore all files in the config folder except those with .default suffix
-/config/*
-!/config/*.default
+# Ignore custom config.
+.yaml
 
 # Ignore Fish-Speech Folder
 /fish-speech

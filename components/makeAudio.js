@@ -45,7 +45,7 @@ export const MakeAudio = async (ref_id, text, config) => {
     const voice_list = [];
     
     for (const f of list) {
-        let cond = f.endwith('.wav');
+        let cond = f.endsWith('.wav');
         cond = cond && await access(f.replace('.wav', '.txt'));
         if (cond) { voice_list.push(f.replace('.wav', '')) };
     }
@@ -59,5 +59,8 @@ export const MakeAudio = async (ref_id, text, config) => {
 }
 
 export const customAudio = async (params, config) => {
-    return await RequestForAudio(params, config);
+    return await RequestForAudio(
+        new Params(params),
+        config
+    );
 }

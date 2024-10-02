@@ -13,7 +13,7 @@ export class Reference {
 }
 
 export class Params {
-    constructor(config = false) {
+    constructor(config = {}) {
         this.text = "你好呀，做一个测试"; // 生成音频的内容
         this.references = undefined; // 参考音频
         this.reference_id = undefined; // 参考模型 id
@@ -48,7 +48,7 @@ export const RequestForAudio = async (params, config) => {
             'Content-Type': 'application/msgpack',
         },
         body: msgpack.encode(params),
-    }
+    };
 
     const res = await fetch(url, options);
 

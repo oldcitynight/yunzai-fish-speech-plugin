@@ -17,27 +17,27 @@ export default class ManageAPI extends plugin {
             priority: 100,
             rule: [
                 {
-                    reg: `^#?${ManageAPI.config.common.name}自动搭建 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}部署本地API$`,
                     fnc: 'installAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${ManageAPI.config.common.name}启动本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}启动本地API$`,
                     fnc: 'StartAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${ManageAPI.config.common.name}关闭本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}关闭本地API$`,
                     fnc: 'ShutdownAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${ManageAPI.config.common.name}重启本地 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}重启本地API$`,
                     fnc: 'RestartAPI',
                     permission: 'master',
                 },
                 {
-                    reg: `^#?${ManageAPI.config.common.name}测试 API$`,
+                    reg: `^#?${ManageAPI.config.common.name}测试API$`,
                     fnc: 'testAPI',
                     permission: 'master'
                 },
